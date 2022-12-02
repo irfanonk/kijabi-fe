@@ -22,7 +22,7 @@ interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
 type Props = {
-  user: User;
+  user: User | null;
 };
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
@@ -37,7 +37,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export default function UserCard({ user }: Props) {
-  const { id, first_name, last_name, email, avatar } = user;
+  // const { id, first_name, last_name, email, avatar } = user || {};
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -49,17 +49,17 @@ export default function UserCard({ user }: Props) {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
-            {first_name.charAt(0)}
+            {user?.first_name.charAt(0)}
           </Avatar>
         }
-        title={`${first_name} ${last_name}`}
-        subheader={email}
+        title={`${user?.first_name} ${user?.last_name}`}
+        subheader={user?.email}
       />
-      <Link sx={{ margin: 1 }} component={RouterLink} to={`/${id}`}>
+      <Link sx={{ margin: 1 }} component={RouterLink} to={`/${user?.id}`}>
         <CardMedia
           component="img"
           height="194"
-          image={avatar}
+          image={user?.avatar}
           alt="Paella dish"
         />
       </Link>

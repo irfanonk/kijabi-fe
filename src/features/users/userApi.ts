@@ -4,8 +4,10 @@ import { api } from "../api/api";
 
 export const fetchUsers = async (filters: FilterState) => {
   const page = filters.page.toString()
+  const email = filters.email
 
-  const response = await api.get(`users?page=${page}`);
+  const response = await api.get(`users?page=${page}${email ? `&email=${email}` : ''}`);
+
 
 
   if (response.status === 200) {

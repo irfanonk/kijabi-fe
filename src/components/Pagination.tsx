@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Box,
   Grid,
@@ -10,7 +9,6 @@ import {
   styled,
 } from "@mui/material";
 
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   FilterState,
   paginate,
@@ -18,8 +16,9 @@ import {
 } from "../features/filter/filterSlice";
 import useResponsive from "../hooks/useResponsive";
 import { getUsers, selectUsers } from "../features/users/userSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
-const StyledStack = styled(Stack)(({ theme }) => ({
+const StyledStack = styled(Stack)(() => ({
   cursor: "pointer",
 }));
 export default function Pagination() {
@@ -28,16 +27,13 @@ export default function Pagination() {
   const filters = useAppSelector(selectFilters) as FilterState;
   const page = filters.page;
   const data = useAppSelector(selectUsers);
-  const totalPage = data?.users?.total_pages || 4;
-
-  const [pageNumbers, setPageNumbers] = useState<number[]>(
-    Array.from(Array(totalPage + 1).keys()).slice(1)
-  );
+  const totalPage = data?.users?.total_pages || 2;
 
   const dispatch = useAppDispatch();
 
   const onClickPage = (pageNumber: number) => {
     dispatch(paginate(pageNumber));
+    dispatch(getUsers());
   };
 
   const onClickNextPage = () => {
@@ -73,19 +69,22 @@ export default function Pagination() {
       <Grid item xs={8}>
         {isDesktop ? (
           <Stack direction="row" spacing={2}>
-            {pageNumbers.map((item) => (
-              <Box
-                onClick={() => onClickPage(item)}
-                sx={{
-                  background: item === page ? "#1EA4CE" : "",
-                  color: item === page ? "#fff" : "#000",
-                  padding: "10px 8px 8px 10px",
-                }}
-                key={item}
-              >
-                {item}
-              </Box>
-            ))}
+            {Array.from(Array(totalPage + 1).keys())
+              .slice(1)
+              .map((item) => (
+                <Box
+                  onClick={() => onClickPage(item)}
+                  sx={{
+                    background: item === page ? "#1EA4CE" : "",
+                    color: item === page ? "#fff" : "#000",
+                    padding: "10px 8px 8px 10px",
+                    cursor: "pointer",
+                  }}
+                  key={item}
+                >
+                  {item}
+                </Box>
+              ))}
           </Stack>
         ) : (
           <Stack>
@@ -95,11 +94,13 @@ export default function Pagination() {
               name="Page"
               onChange={onChangePage}
             >
-              {pageNumbers.map((item) => (
-                <MenuItem key={item} value={item}>
-                  {item}
-                </MenuItem>
-              ))}
+              {Array.from(Array(totalPage + 1).keys())
+                .slice(1)
+                .map((item) => (
+                  <MenuItem key={item} value={item}>
+                    {item}
+                  </MenuItem>
+                ))}
             </Select>
           </Stack>
         )}
