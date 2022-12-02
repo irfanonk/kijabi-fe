@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: "https://e-commerce-jsondb.vercel.app/"
+    baseURL: "https://kijabi-be.vercel.app/api/"
 })
 
 api.interceptors.request.use((config) => {
