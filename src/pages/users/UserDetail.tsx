@@ -12,13 +12,15 @@ import UserCard from "./components/UserCard";
 
 export default function UserDetail() {
   const params = useParams();
-  const { id } = params;
+  const id = params.id;
+
   const dispatch = useAppDispatch();
   const data = useAppSelector(selectUsers) as UserState;
-  console.log("data", data);
 
   useEffect(() => {
-    dispatch(getUser(id!));
+    if (id) {
+      dispatch(getUser(id));
+    }
   }, []);
   return (
     <Container>
@@ -26,7 +28,7 @@ export default function UserDetail() {
         {data.status === "loading" ? (
           <CircularProgress />
         ) : (
-          <Stack>
+          <Stack justifyContent="center" alignItems="center">
             <UserCard user={data?.user} />
           </Stack>
         )}
