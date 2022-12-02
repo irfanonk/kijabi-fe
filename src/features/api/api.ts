@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: "https://kijabi-be.vercel.app/api/"
-    // baseURL: "http://localhost:8080/api/"
+    baseURL: "https://kijabi-be.vercel.app/apiV1/"
+    // baseURL: "http://localhost:8080/apiV1/"
 })
 
 api.interceptors.request.use((config) => {

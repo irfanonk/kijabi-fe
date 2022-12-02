@@ -21,6 +21,7 @@ import UserCard from "./components/UserCard";
 export default function UserList() {
   const dispatch = useAppDispatch();
   const data = useAppSelector(selectUsers) as UserState;
+
   const [searchedData, setSearchedData] = useState<User[] | null>(null);
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function UserList() {
     );
   };
   return (
-    <Container sx={{ padding: 10 }}>
+    <Container sx={{ padding: 5 }}>
       <Stack sx={{ background: "#fff" }} direction="column">
         <Stack p={2}>
           <TextField
