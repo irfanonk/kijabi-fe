@@ -48,7 +48,7 @@ export default function UserCard({ user }: Props) {
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
+          <Avatar sx={{ bgcolor: blue[600] }} aria-label="user">
             {user?.first_name.charAt(0)}
           </Avatar>
         }
